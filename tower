@@ -1,0 +1,13 @@
+local descended = 0
+while turtle.detectdown() == false do
+	turtle.down()
+	descended = descended + 1
+end
+print(descended)
+turtle.select(1)
+while descended > 0 do
+	turtle.up()
+	turtle.placeDown()
+	descended = descended - 1
+end
+print(descended)
