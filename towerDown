@@ -1,0 +1,50 @@
+local args = { ... }
+if #args == 0 then
+  turtle.select(1)
+end
+if #args == 1 then
+  local slot = 0
+  print("slot=0")
+  if tonumber(args[1]) > 16 then
+    slot = 16
+	print("slot=16")
+  else
+    slot = tonumber(args[1])
+	print(string.format("slot=%s",tostring(slot)))
+  end
+  turtle.select(slot)
+  print(string.format("Slot %s selected",tostring(slot)))
+end
+local descended = 0
+print("descended=0")
+while turtle.detectDown() == false do
+  print("Nothing below")
+  if turtle.down() == true then
+    print("Moved down")
+    descended = descended + 1
+	print(string.format("descended=%s",tostring(descended)))
+  end
+end
+print(descended)
+if descended > 64 then
+  descended = 64
+  print(descended)
+end
+while descended > 0 do
+  print(string.format("Work to do: %s",tostring(descended)))
+  if turtle.detectDown() == true then
+    print("Block below")
+    if turtle.up() == true then
+      print("Moved up")
+      if turtle.detectDown() == false then
+        print("No block below")
+        if turtle.placeDown() == true then
+          print("Placed block down")
+          descended = descended - 1
+          print(string.format("%s cycles remaining",tostring(descended)))
+        end
+      end
+    end
+  end
+end
+print(descended)
