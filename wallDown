@@ -1,0 +1,18 @@
+local args = { ... }
+if #args == 0 then
+  return
+end
+local columns = 0
+if #args == 1 then
+  if tonumber(args[1]) > 16 then
+    columns = 16
+  else
+    columns = tonumber(args[1])
+  end
+end
+for column = 1,columns do
+  shell.run("towerDown", column)
+  if column < columns then
+    turtle.forward()
+  end
+end

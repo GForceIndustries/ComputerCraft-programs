@@ -1,0 +1,6 @@
+local args = { ... }
+if #args == 1 then
+	shell.run("rectangle",args[1],args[1])
+else
+	return
+end

@@ -1,0 +1,64 @@
+local args = { ... }
+if #args ~= 2 then
+  return
+end
+
+local columns = 0
+local rows = 0
+rows = tonumber(args[1])
+columns = tonumber(args[2])
+
+local slot = 1
+turtle.select(slot)
+
+local c = 0 -- column counter
+
+function nextslot()
+	if slot < 16 then
+		slot = slot + 1
+		turtle.select(slot)
+	else
+		return
+	end
+end
+
+function checkslot()
+	print(slot)
+	if (turtle.getItemCount(slot) < 1) then
+		nextslot()
+	end
+end
+
+function onecolumn(rs)
+	local r = 0 -- row counter
+	while (r < rs) do
+		checkslot()
+		turtle.placeDown()
+		if (r < (rs - 1)) then
+			turtle.forward()
+		end
+		r = r + 1
+	end
+end
+
+function nextcolumn()
+	if (c % 2 == 0) then
+		-- even
+		-- turn right
+		turtle.turnRight()
+		turtle.forward()
+		turtle.turnRight()
+	else
+		-- odd
+		-- turn left
+		turtle.turnLeft()
+		turtle.forward()
+		turtle.turnLeft()
+	end
+end
+
+while (c < columns) do
+	onecolumn(rows)
+	nextcolumn()
+	c = c + 1
+end
